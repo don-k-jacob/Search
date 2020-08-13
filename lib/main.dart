@@ -51,6 +51,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  int ind = 0;
 
   void _incrementCounter() {
     setState(() {
@@ -79,16 +80,72 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8),
-              child: TextFormField(
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Color(0xffE9E9E9),
+                    borderRadius: BorderRadius.circular(15)),
+                child: TextFormField(
 //                controller: outputController,
 //                readOnly: edit,
-                decoration: InputDecoration(
-                  labelText: "Search",
-                  prefixIcon: Icon(Icons.search),
-                  contentPadding: EdgeInsets.all(15.0),
-                  border: InputBorder.none,
-                  filled: true,
-                  fillColor: Colors.grey[200],
+                  decoration: InputDecoration(
+                    labelText: "Search",
+                    prefixIcon: Icon(Icons.search),
+                    contentPadding: EdgeInsets.all(15.0),
+                    border: InputBorder.none,
+                    filled: true,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Container(
+                height: 43,
+                width: MediaQuery.of(context).size.width,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: chips.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          ind = index;
+                        });
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 3),
+                        child: Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 31, vertical: 8),
+                          decoration: BoxDecoration(
+                              color: (index == ind)
+                                  ? Color(0xff0064FF)
+                                  : Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: Color(0xff0064FF),
+                                width: 1,
+                              )),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                chips[index],
+                                style: TextStyle(
+                                    color: (index == ind)
+                                        ? Colors.white
+                                        : Color(0xff3A2361),
+                                    letterSpacing: 0.02,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -98,3 +155,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+List<String> chips = ["POST", "FAMILY", "PEOPLE", "EVENT"];
